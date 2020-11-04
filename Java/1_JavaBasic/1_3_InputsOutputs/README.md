@@ -1,141 +1,90 @@
-# 자료형 (Data Type)
+# 자료의 입출력 (Inputs and Outputs)
 
-## 자료형이란
+## 출력 메소드
 
-- 변수의 종류, 타입
-- 기본형 (Primitive Type)
-  - 값을 변수에 직접 저장하는 자료형
+- 포맷 문자열을 이용한 문자열/기본형 출력
+- 객체를 직접 출력
 
-    | 종류 |         자료형                   | 크기 (byte) |
-    |-----|--------------------------------|------------|
-    | 문자 | `char`                         | 2          |
-    | 정수 | `byte`, `short`, `int`, `long` | 1, 2, 4, 8 |
-    | 실수 | `float`, `double`              | 4, 8       |
-    | 논리 | `boolean`                      | 1          |
+### PrintStream의 출력 메소드
 
-    - 정수형의 값 표현 범위
-      |  자료형  |      범위         |
-      |--------|------------------|
-      | `byte` | -2^7 ~ 2^7 - 1   |
-      | `short`| -2^15 ~ 2^15 - 1 |
-      | `int`  | -2^31 ~ 2^31 - 1 |
-      | `long` | -2^63 ~ 2^63 - 1 |
+| 메소드      | 메소드 선언 | 설명 |
+|-----------|-----------|----|
+| print()   | `public void print(Object obj)` | obj를 스트림으로 출력한다.  |
+| println() | `public void println(Object x)` | x를 스트림으로 출력하고 줄바꿈한다. |
+| printf()  | `public PrintStream printf(String format, Object ... args)`| Format 맞추어 args를 출력한다. |
 
-    - 실수형의 값 표현 범위
-      | 자료형   |       범위                    |  m  |  e  |
-      |---------|-----------------------------|-----|-----|
-      | `float` | -m \* 10^e ~ m \* 10^e      |  23 |  8  |
-      | `double`| -m \* 10^e ~ m \* 10^e      |  52 |  11 |
+### 포맷 문자열 지시자
 
-- 참조형 (Reference Type)
-  - 값을 직접 저장하지 않고, 값이 저장된 주소를 저장
-    ex) `Date birthDay = new Date();`
+| 지시자 | 설명 |
+|------|-----|
+|  %b  | boolean |
+|  %d  | decimal integer |
+|  %o  | octal |
+|%x, %X| hexadecimal |
+| %f   | decial float|
+| %e, %E | exponent |
+| %c     | character  |
+| %s    | string |
+| %n    | newline |
 
-## 여러가지 자료형
+### 지시자 자릿수 표현
 
-### 정수형
+| 표현  |   설명     |
+|------|-----------|
+| %nd  | 최소 n칸을 사용하고 숫자를 오른쪽 정렬 |
+| %-nd | 최소 n칸을 사용하고 숫자를 왼쪽 정렬 |
+| %0nd | 최소 n칸을 사용하고 빈칸은 0으로 채움 |
+| %n.mf | 최소 n칸을 사용하고 소수점 이하 m자리까지 표현 |
 
-- 정수 리터럴
-  - 진수 표기법
-    | 진수법               | 접두어 |  예시      |
-    |--------------------|-------|-----------|
-    | 10진수(decimal)     |   -   |  `32`     |
-    | 2진수(binary)       |  0b   |  `0b1011` |
-    | 8진수(octal)        |  0    |  `0342`   |
-    | 16진수(hexadecimal) |  0x   |  `0x4A`   |
-  - 정수 리터럴은 기본적으로 `int` 자료형
-  - `int` 범위를 넘어서는 리터럴의 경우 `L`을 붙여서 표기
-    ex) `long largeValue = 100000000000L;`
-  - 가독성 향상을 위해 세자리 수 마다 `_`를 이용해 천단위 표기
-    ex) `long largeValue = 100_000_000_000L;`
+### 시간을 출력하는 포맷 문자
 
-### 실수형
+| 지시자  |     설명     | 예시 |
+|-------|--------------|----|
+| %tH   | 24시간 표기법의 시간 | 22 |
+| %tl   | 12시간 표기법의 시간 | 08 |
+| %tM   | 분 | 59 |
+| %tS   | 초 | 60 |
+| %tp   | 오전/오후 | AM |
+| %tT   | %tH:%tM:%tS | 23:11:06 |
+| %tR   | %tH:%tM | 16:42 |
+| %tr   | %tl:%tM:%tS %tp | 04:15:55 PM |
 
-- 실수 리터럴
-  - 실수 리터럴은 기본적으로 `double` 자료형
-  - `f`를 붙여 `float` 타입을 표현할 수 있음
-    ex) `float value = 14.42f;`
-  - `e`를 이용해 지수 표현을 할 수 있음
-    ex) `double value = 1.42e3;` 1.42 * 10^3 = 1420
+### 날짜를 출력하는 포맷 문자
 
-### 문자형
+| 지시자  |  설명     | 예시 |
+|-------|----------|------|
+|%tB| 월 | March |
+|%tb| 축약형 월 | Mar |
+|%tm| 월 | 03 |
+|%tA| 요일 | Monday |
+|%ta| 축약형 요일 | Mon |
+|%tY| 년도 | 2020 |
+|%ty| 축약형 년도 | 20 |
+|%td| 일 | 09 |
+|%te| 일 | 9 |
+|%tZ| Time Zone | KST |
+|%tD| %tm/%td/%ty | 02/24/89 |
+|%tF| %tY-%tm-%td | 1989-02-24 |
+|%tc| %ta %tb %td %tT %tZ %tY | Sun Feb 24 07:20:15 KST 1989 |
 
-- [ASCII 코드](https://www.ascii-code.com/)
-  - 작은 따옴표로 표현하며, 문자는 기본적으로 ASCII 코드로 저장됨
-  ex) `char asciiCharacter = 'A';`
-  - ASCII 코드의 특수 문자 입력
+## 입력 메소드
 
-  |      의미        | 표시 |
-  |-----------------|-----|
-  |tab              | `\t`|
-  |backspace        | `\b`|
-  |newline          | `\n`|
-  |form feed        | `\f`|
-  | \               | `\\`|
-  |carriage return  | `\r`|
-  |'                | `\'`|
-  |"                | `\"`|
-
-- [유니코드 테이블](https://unicode.org/charts/)
-  - 유니코드는 `\u` + 16진수로 표현
-  ex) `char unicodeCharacter = '\u0041';`
-
-### 논리형
-
-- `true`, `false` 두 가지 값만이 허용된다.
-  
-  ```java
-  boolean isTrue = true;
-  boolean isFalse = false;
-  ```
-
-### 문자열
-
-- 문자열은 참조형 자료형이며, 큰 따옴표로 표현한다.
-  
-  ```java
-  String s = "문자열은 큰따옴표로 묶는다.";
-  ```
-
-- 문자열은 덧셈으로 이어 붙일 수 있다. 문자열로 변환이 가능한 자료형은 문자열로 변환되어 결합한다.
+- Scanner 클래스를 이용하여 입력받을 수 있다.
 
   ```java
-  String s1 = "a" + "b" + "c";
-  String s2 = 1 + "1" + 3;
+  import java.util.Scanner;
+
+  ...
+
+  Scanner scanner = new Scanner(System.in);
   ```
 
-### 형변환 (Type Casting)
+- Scanner 클래스의 주요 메소드
 
-#### 형변환 연산자
-
-- 형변환 연산자는 ()로 변수 앞에 입력한다.
-  ex) `int value = (int)10.8;` -> value = 10
-
-#### 업캐스팅 (Upcasting)
-
-- 값의 범위가 더 큰 자료형으로 변환하는 경우
-  - 묵시적(Implicit)/명시적(Explicit) 방법 모두 사용 가능
-  
-    ```java
-    byte x = 10;
-    int y = (int)x;
-    int z = x;
-    ```
-
-#### 다운캐스팅 (Downcasting)
-
-- 값의 범위가 더 작은 자료형으로 변환하는 경우
-  - 명시적인 방법으로만 캐스팅 가능
-
-    ```java
-    int x = 1024;
-    // byte y = x;
-    byte z = (byte)x;
-    ```
-
-    ```java
-    long x = 100;
-    float y = x;
-    // long z = y;
-    long z = (long)y;
-    ```
+| 메소드 | 메소드 선언 | 설명 |
+|-------|-----------|------|
+|next()| `public String next()` | 공백을 기준으로 한 단어씩 입력받는다. |
+|nextLine()| `public String nextLine()` | 한 줄 전체를 입력받는다. |
+|nextInt()| `public int nextInt()` | `int` 값을 입력받는다. |
+|nextDouble() | `public double nextDouble()` | `double` 값을 입력 받는다. |
+|close() | `public void close()` | 입력 스트림을 종료한다. |

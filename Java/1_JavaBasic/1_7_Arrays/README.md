@@ -1,93 +1,76 @@
-# 반복문 (Loops)
+# 배열 (Arrays)
 
-## 반복문의 일반적인 구성
+## 배열의 특성
 
-- 초기화 (Initialization)
-- 조건식 (Conditional Expression)
-- 실행문 (Execution Statement)
-- 증감식 (Increment and Decrement Statement)
+- 하나의 변수로 여러개의 값을 다룰 수 있다.
+- 동일한 자료형의 값만 다룰 수 있다.
+- 한번 생성된 배열의 크기는 변하지 않는다.
+- 배열에 속한 값은 메모리에 연속적으로 위치한다.
 
-## 다양한 반복문
+## 배열의 생성
 
-### for 문
+- 배열의 선언
 
-```java
-for(초기화; 조건식; 증감식) {
-  // 실행문
-}
-```
+  ```java
+  int[] intArray;// 자료형[] 변수명; recommended
+  int integerArray[];// 자료형 변수명[]; old c-style
+  ```
 
-### while 문
+- 배열의 생성/초기화
+  - 생성 후 값 할당
 
-- while 문의 경우 실행문이 한번도 실행되지 않을 수도 있다.
+    ```java
+    int[] intArray = new int[10];
+    intArray[0] = 4;
+    intArray[1] = 10;
+    ```
 
-```java
-// 초기화
-while(조건식) {
-  // 실행문
-  // 증감식
-}
-```
+    ```java
+    int[] intArray;
+    intArray = new int[]{4, 5, 1, 2, 5};
+    ```
 
-### do ~ while 문
+  - 생성과 동시에 값 할당
 
-- do ~ while 문의 경우 실행문은 무조건 한번 이상 실행된다.
+    ```java
+    int[] intArray = {3, 5, 1, 20, 65};
+    int[] intArray2 = new int[]{4, 6, 2, 3, 4};
+    ```
 
-```java
-//초기화
-do {
-  //실행문
-  //증감식
-} while(조건식)
-```
+## 배열과 반복문
 
-## 반복문 제어
+- 인덱스를 이용한 배열 접근
 
-### break 문
-
-- 반복문을 곧바로 종료한다.
-
-```java
-while (조건식) {
-  if (종료조건) {
-    break;
+  ```java
+  float[] floatArray = new float[10];
+  for (int i = 0; i < floatArray.length; i++) {
+    floatArray[i] = i * 0.5;
   }
-  //실행문
-  //증감식
+  ```
+
+- 향상된 for 문을 이용한 배열 접근
+
+  ```java
+  int[] intArray = {4, 5, 1, 2, 7, 5};
+  for (int value: intArray) {
+    System.out.println(value);
+  }
+  ```
+
+## 배열의 크기 변경
+
+- 배열의 크기는 변경할 수 없으므로 새로운 배열을 만들고 데이터를 옮겨야 한다.
+
+```java
+int[] src = {1, 2, 3, 4, 5};
+int[] dst = new int[10];
+for(int i = 0; i < source.length; i++) {
+  dst[i] = src[i];
 }
 ```
 
-### continue 문
-
-- 반복문을 곧바로 다음 반복으로 건너 뛴다.
-- while 문의 경우 증감식이 실행되지 않을 수 있다.
-
 ```java
-while (조건식) {
-  if (제어조건) {
-    //증감식
-    continue;
-  }
-  //실행문
-  //증감식
-}
-```
-
-### label
-
-- 중첩 반복문에서 어떤 반복문을 제어할지 결정
-
-```java
-loop1: for (int i = 0; i < 10; i++) {
-   loop2: for (int j = 0; j < 10; j++) {
-    if (j == 3) {
-      break;
-      // break loop1;
-      // break loop2;
-      // continue;
-      // continue loop1;
-      // continue loop2;
-    }
-  }
-}
+int[] src = {1, 2, 3, 4, 5};
+int[] dst = new int[10];
+System.arraycopy(src, 0, dst, 0, src.length);
 ```

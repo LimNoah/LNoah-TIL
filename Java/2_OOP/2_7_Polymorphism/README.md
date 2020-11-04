@@ -1,98 +1,109 @@
-# 제어자 (Modifier)
+# 다형성 (Polymorphism)
 
-## 제어자란
+## 다형성의 다양한 특징
 
-- 클래스, 변수, 메소드에 부가 기능을 부여하는 키워드
-- 접근 제어자 (Access modifiers)
-  - 접근할 수 있는 범위를 정하는 키워드
-  - `public`, `protected`, `(default = package)`, `private`
-- 그 외 제어자 (Other modifiers)
-  - 특별한 기능을 부여하는 제어자
-  - `static`, `final`, `abstract`, `synchronized`
-
-## 제어자의 기능
-
-### 접근 제어자
-
-- 접근 가능한 범위를 정해, 데이터 은닉/보호 (Encapsulation) 기능을 추가한다.
-- 접근 제어자별 접근 범위
-  | 제어자 | 같은 클래스 | 같은 패키지 | 다른 패키지에 속한 자식 클래스 | 전체 |
-  |-------|:------:|:------:|:----:|:----:|
-  |`public`|O|O|O|O|
-  |`protected`|O|O|O| |
-  |`default`|O|O|||
-  |`private`|O||||
-
-- `private` 또는 `protected` 변수에 접근하기 위해 getter와 setter 사용
+- 부모 클래스 타입으로 자식 클래스 객체를 참조하는 특징
 
   ```java
-  class public Foo {
-      private int x = 0;
-      private int y = 1;
-
-      public void setX(int x) { // setter
-          this.x = x;
+  public class Foo {
+      public void methodA() {
+          return;
       }
+  }
 
-      public void setY(int y) { // setter
-          if (y >= 0) {
-            this.y = y;
-          }
+  public class Bar extends Foo {
+      public void methodB() {
+          return;
       }
+  }
 
-      public int getX() { // getter
-          return x;
-      }
+  public class Main {
+      public static void main(String args[]) {
+          Bar bar = new Bar();
 
-      public int getY() { // getter
-          return y;
+          Foo foo = (Foo)bar;
       }
   }
   ```
 
-### 그 외의 제어자
-
-- `final`
-  - 더 이상 바뀔 수 없음을 의미
-  - 클래스, 메소드, 변수에 사용할 수 있음
-    - 클래스: 더 이상 상속이 불가능해진다.
-    - 메소드: 자식 클래스에서 오버라이드할 수 없다.
-    - 변수: 변수의 값이 초기화 이후에 변하지 않는다.
-      - 생성자에서 초기화가 이루어지는 것을 `blank final` 변수라 한다.
-
-      ```java
-      public class Foo {
-          final int x = 0; // final variable
-          final int y; // blank finial variable
-
-          public Foo(int y) {
-            this.y = y; // blank final variable initialization
-        }
-
-      }
-      ```
-
-- `static`
-  - 클래스 변수, 클래스 메소드 등을 선언하기 위해 사용
-
-- `abstract`
-  - 추상 클래스에서 사용
-
-- `synchronized`
-  - 동시성 프로그래밍에 사용
-
-## 싱글톤 패턴 (Singletone)
-
-- 객체가 단 하나만 존재할 수 있는 클래스
-- `private` 생성자를 이용한다.
+- 부모 클래스로 자식 클래스를 참조한 경우, 자식 클래스의 메소드는 사용할 수 없다.
 
   ```java
-  class SingletonClass {
-    private static SingletoneClass instance = new SingletonClass();
-    private SingletonClass() {}
+  public class Main {
+      public static void main(String args[]) {
+          Bar bar = new Bar();
+          Foo foo = (Foo)bar;
 
-    public static SingletonClass getInstance() {
-        return instance;
-    }
+          foo.methodA(); // works
+          // foo.methodB(); // error
+      }
+  }
+  ```
+
+- 자식 클래스로 부모 클래스를 참조하려 하면 java.lan.ClassCastException 오류 발생
+
+  ```java
+  public class Main {
+      public static void main(String args[]) {
+          Foo foo = new Foo();
+          Bar bar;
+
+          // bar = (Bar)foo; // error
+          if (foo instanceof Bar) { // returns false
+              bar = (Bar)foo;
+          }
+      }
+  }
+  ```
+
+- 멤버 변수 재정의는 선언된 객체의 타입을 따른다.
+- 메소드 오버라이딩은 메모리상의 객체의 타입을 따른다. (가상 메소드 호출; Virtual method call)
+
+  ```java
+  public class Foo {
+      public String x = "Super";
+
+      public void methodA() {
+          System.out.println("Super");
+      }
+  }
+
+  public class Bar extends Foo {
+      public String x = "Sub";
+
+      @Override
+      public void methodA() {
+          System.out.println("Sub");
+          return;
+      }
+  }
+
+  public class Main {
+      public static void main(String args[]) {
+          Bar bar = new Bar();
+          Foo foo = (Foo)bar;
+
+          System.out.println(bar.x); // Sub
+          bar.methodA(); // Sub
+
+          System.out.println(foo.x); // Super
+          foo.methodA(); // Sub
+      }
+  }
+  ```
+
+- 공변 반환 타입 (Covariant return type)
+
+  ```java
+  class Foo {
+      public Foo getInstance() {
+          return this;
+      }
+  }
+
+  class Bar extends Foo {
+      public Bar getInstance() { // Foo 대신 Bar로 리턴 가능
+          return this;
+      }
   }
   ```

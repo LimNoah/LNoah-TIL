@@ -1,298 +1,148 @@
-# 람다식 (Lambda Expression)
+# java.lang 패키지
 
-## 람다식이란
+## java.lang
 
-- Java 1.8에서 추가된 함수형 프로그래밍 기법
-- 객체지향 프로그래밍과 다르게, 비즈니스 로직만을 빠르게 구현하는 특징
-- 객체지향 언어인 Java에서 메소드를 함수처럼 사용하는 형식
+- Java에서 가장 기본적이며 자주 사용되는 클래스를 모은 패키지
+- 별도로 import하지 않아도 사용이 가능한, Java의 기본 중의 기본
 
-## 람다식의 예
+## Object Class
 
-### 배열의 정렬
+- 모든 클래스의 조상 클래스로, 클래스가 갖춰야할 기본 기능을 제공
+- 필요한 경우 Object 클래스에 정의된 메소드를 Override하여 사용
 
-- 기본 정렬 방식을 이용한 정렬
+  | 메소드 | 설명|
+  |--------|-----|
+  |`public final native Class<?> getClass()` | 현재 객체의 클래스를 반환한다. |
+  |`public native int hashCode()` | 현재 객체의 해시코드 값을 반환한다. |
+  |`public boolean equals()` | 현재 객체와 대상이 같은 객체를 참조하는지 여부를 반환한다. |
+  |`public String toString()` | 객체를 문자열로 변환하여 반환한다. |
+  |`proteted native clone() throws CloneNotSupportedException` | 객체를 복사하여 새로운 객체로 반환한다. |
+
+### equals()
+
+- Object 클래스의 equals() 메소드 구현
+  - 객체의 참조만을 비교
 
   ```java
-  String [] strings = {"fast", "campus", "java", "backend", "school"};
-  System.out.println(Arrays.toString(strings));
-  Arrays.sort(strings);
-  System.out.println(Arrays.toString(strings));
-  ```
-
-  ```java
-  public int compare(String o1, String o2) {
-      return o1.compareTo(o2);
+  public boolean equals(Object obj) {
+      return (this == obj);
   }
   ```
 
-- 익명 내부 클래스를 이용한 정렬 방식 변경
+- String 클래스의 equals() 메소드 구현 (Overriding)
+  - 효율적으로 객체의 내용이 동일한지 비교
 
   ```java
-  Arrays.sort(strings, new Comparator<String>() { // 객체를 생성하여 전달
-      @Override
-      public int compare(String o1, String o2) {
-          return o1.compareTo(o2) * -1; // 내림차순
+  public boolean equals(Object anObject) {
+      if (this == anObject) {
+          return true;
       }
-  });
-  ```
-
-- 람다식을 이용한 정렬 방식의 변경
-
-  ```java
-  Arrays.sort(strings, (o1, o2) -> {return o1.compareTo(o2) * -1;});
-  ```
-
-  ```java
-  Comparator<String> comp = (o1, o2) -> {
-      return o1.compareTo(o2) * -1;
-  };
-  Arrays.sort(strings, comp);
-  ```
-
-- 함수형 인터페이스 (Functional Interface)
-  - 추상 메소드가 단 하나 존재하는지 검사
-
-    ```java
-    @FunctionalInterface
-    public interface Comparator<T> {
-        int compare(T o1, T o2);
-        ...
-    }
-    ```
-
-## 람다식의 형식
-
-  ```java
-  (String x) -> { System.out.println(x); }
-
-  (x) -> { System.out.println(x); }
-
-  x -> System.out.println(x)
-
-  () -> System.out.println("x");  // () 생략 불가능
-
-  (x) -> {
-      System.out.println(x);
-      return x;
-  }
-
-  (x) -> "x: " + x
-  ```
-
-## 람다식의 변수 참조
-
-- 익명 내부 클래스와 동일한 규칙으로 변수 참조
-- 문법적으로 this의 사용법만 다름
-  - 익명의 내부 클래스와 달리 외부 클래스를 참조
-
-  ```java
-  @FunctionalInterface
-  interface FunctionalInterface {
-      String method();
-  }
-
-  class Main {
-      void functionalMethod(FunctionalInterface obj) {
-          System.out.println(obj.method());
+      if (anObject instanceof String) {
+          String aString = (String)anObject;
+          if (!COMPACT_STRINGS || this.coder == aString.coder) {
+              return StringLatin1.equals(value, aString.value);
+          }
       }
-
-      public static void main(String[] args) {
-          functionalMethod(()-> {
-              System.out.println("this: " + this);
-              System.out.println("OuterClass.this: " + Main.this);
-              return "Lambda expression used."
-          });
-
-          functionalMethod(new FunctionalInterface() {
-              @Override
-              String method() {
-                  System.out.println("this: " + this);
-                  System.out.println("OuterClass.this: " + Main.this);
-                  return "Anonymous inner class used."
-              });
-      }
-
+      return false;
   }
   ```
 
-## 표준 함수형 인터페이스
+### hashCode()
 
-- 자주 사용되는 함수형 인터페이스를 정의해 둔 API
-- Consumer, Supplier, Function, Operation, Predicate 계열이 있다.
+- 객체를 구분하기 위해 사용하는 정수값(해시코드)을 반환
+  - 프로그램 내에서 객체마다 유일하므로 주소값처럼 사용 가능
+- `native` 메소드이므로 구현 내용을 볼 수 없음
+- hashCode()의 제한 사항
+  - 한 객체의 hashCode()를 여러번 호출할 경우, equals()에 사용하는 값이 변하지 않으면 동일한 값을 반환해야 한다.
+  - equals() 메소드가 같다고 판단한 두 객체의 hashCode() 반환값은 같아야 한다.
+  - equals() 메소드가 다르다고 판단한 두 객체의 hashCode()가 반드시 다를 필요는 없으나, 다른 값이 나오면 HashTable 성능이 향상된다.
 
-| 계열 | 입력 | 출력 | 메소드 | 설명 |
-|-----|------|------|--------|-----|
-| Consumer| O | X | `void accept(T)` | 입력을 소비 |
-| Supplier | X | O | `T get()` | 출력을 공급 |
-| Function | O | O | `T apply(R)` | 입력 -> 출력 함수 매핑 |
-| Operation | O | O | `T apply(T)` | 입력을 연산하여 동일 타입의 출력으로 리턴 |
-| Predicate | O | `boolean` | `boolean test(T)` | 입력을 판단 |
+### clone()
 
-### 표준 함수형 인터페이스의 종류
-
-#### Consumer 계열
-
-| 인터페이스 | 메소드 |
-|-----------|--------|
-| `Consumer<T>` | `void accept(T t)` |
-| `BiConsumer<T, U>` | `void accept(T t, U u)` |
-| `IntConsumer` | `void accept(int value)` |
-| `LongConsumer` | `void accept(long value)` |
-| `DoubleConsumer` | `void accept(double value)` |
-| `ObjIntConsumer<T>` | `void accept(T t, int value)` |
-| `ObjLongConsumer<T>` | `void accept(T t, long value)` |
-| `ObjDoubleConsumer<T>` | `void accept(T t, double value)` |
-
-#### Supplier 계열
-
-| 인터페이스 | 메소드 |
-|-----------|--------|
-| `Supplier<T>` | `T get()` |
-| `BooleanSupplier` | `boolean getAsBoolean()` |
-| `IntSupplier` | `int getAsInt()` |
-| `LongSupplier` | `long getAsLong()` |
-| `DoubleSupplier` | `double getAsDouble()` |
-
-#### Function 계열
-
-| 인터페이스 | 메소드 |
-|-----------|--------|
-| `Function<T, R>` | `R apply(T t)` |
-| `BiConsumer<T, U, R>` | `R apply(T t, U u)` |
-| `PFunction<R>` | `R apply(p value)` |
-| `PtoQFunction` | `q applyAsQ(p value)` |
-| `ToPFunction<T>` | `p applyAsP(T t)` |
-| `ToPBiFunction<T, U>` | `p applyAsP(T t, U u)` |
-  
-  ```
-  P, Q : Int, Long, Double
-  p, q : int, long, double
-  ```
-
-#### Operator 계열
-
-| 인터페이스 | 메소드 |
-|-----------|--------|
-| `UnaryOperator<T>` | `T apply(T t)` |
-| `BinaryOperator<T>` | `T apply(T t1, T t2)` |
-| `IntUnaryOperator` | `int applyAsInt(int value)` |
-| `LongUnaryOperator` | `long applyAsLong(long value)` |
-| `DoubleUnaryOperator` | `double applyAsDouble(double value)` |
-| `IntBinaryOperator` | `int applyAsInt(int value1, int value2)` |
-| `LongBinaryOperator` | `long applyAsLong(long value, long value2)` |
-| `DoubleBinaryOperator` | `double applyAsDouble(double value, double value2)` |
-
-#### Predicate 계열
-
-| 인터페이스 | 메소드 |
-|-----------|-------|
-| `Predicate<T>` | `boolean test(T t)` |
-| `BiPredicate<T, U>` | `boolean test(T t, U u)` |
-| `IntPredicate` | `boolean test(int value)` |
-| `LongPredicate` | `boolean test(long value)` |
-| `DoublePredicate` | `boolean test(double value)` |
-
-### 표준 함수형 인터페이스의 메소드
-
-#### andThen(), compose()
-
-- 두 개 이상의 함수형 인터페이스를 연결하기 위해 사용
-  - `A.andThen(B)`: A를 먼저 실행하고 B를 실행. Consumer, Function, Operator 계열 지원
+- 자신을 복제하여 새로운 객체를 생성하는 메소드
+- 배열을 복제할 경우 새로운 객체를 생성하므로 원본을 훼손하지 않을 수 있음
+- clone() override 시 `Cloneable` 인터페이스를 구현해야 함
 
   ```java
-  Function<String, String> funcOne = x -> "str: " + x;
-  Function<String, String> funcTwo = x -> "{" + x + "}";
-  Function<String, String> andThen = funcOne.andThen(funcTwo); // {str: x}
+  int [] ints = {1, 2, 3, 4, 5};
+  int [] ints2 = ints.clone();
   ```
 
-  - `A.compose(B)`: B를 먼저 실행하고 A를 실행. Function, Operator 계열 지원
-  
-  ```java
-  IntUnaryOperator multTwo = x -> x * 2;
-  IntUnaryOperator addTen = x -> x + 10;
-  IntUnaryOperator multTwo.compose(addTen); // (x + 10) * 2
-  ```
+### getClass()
 
-#### and(), or(), negate(), isEqual()
-
-- Predicate 계열의 기본 메소드
-  - and(), or(), negate()
-  - 각각 &&, ||, !의 동작을 한다.
+- Class 에 대한 정보를 담고 있는 Class 객체를 반환
+- 객체의 getClass() 메소드 또는 해당 클래스의 정적 변수 class를 이용 가능
 
   ```java
-  DoublePredicate predOne = x -> x > 0.5;
-  DoublePredicate predTwo = x -> x < 0.0;
-  DoublePredicate predThree = predOne.or(predTwo);
-  DoublePredicate predFour = predThree.negate();
+  class Foo {
+      public void methodA() {
+          System.out.println("method A called.");
+      }
+  }
+
+  class FooTest {
+      public static void main(String[] args) throws Exception {
+          Foo foo = new Foo();
+          Class fooClass = foo.getClass();
+
+          System.out.println(fooClass.getName());
+          System.out.println(fooClass.getDeclaredMethods().length);
+          System.out.println(Foo.class.getDeclaredMethod("methodA").invoke(foo));
+      }
+  }
   ```
 
-- Predicate 계열의 클래스 메소드
-  - isEqual()
+### System
 
-  ```java
-  Predicate<String> isEqualToString = Predicate.isEqual("String");
-  ```
+- 실행 중인 OS와 interact하기 위한 클래스
+- System 클래스의 주요 정적 변수
 
-#### minBy(), maxBy()
+  | 속성 | 설명 |
+  |------|-----|
+  | `public static final PrintStream err` | 오류를 출력하기 위한 표준 출력 스트림 |
+  | `public static final InputStream in` | 표준 입력을 처리하기 위한 입력 스트림 |
+  | `public static final PrintStream out` | 표준 출력을 처리하기 위한 출력 스트림 |
 
-- BinaryOperator 클래스의 클래스 메소드
-  - `Comparator<T>`를 파라미터로 받아 최소값/최대값을 구하는 `BinaryOperator<T>`를 리턴
+- System 클래스의 주요 정적 메소드
 
-  ```java
-  BinaryOperator<String> minBy = BinaryOperator.minBy((o1, o2) -> {
-      return len(o1) > len(o2) ? 1 : -1;
-  });
+  | 메소드 | 설명 |
+  |-------|------|
+  | `arraycopy()` | src 배열의 내용을 dst 배열로 복사한다. |
+  | `currentTimeMillis()` | 현재 시스템 시간을 ms로 반환한다. |
+  | `exit()` | 프로그램을 종료한다 |
+  | `gc()` | GC를 요청한다. |
+  | `getenv()` | 환경 변수의 값을 반환한다. |
+  | `getProperties()` | 시스템 속성을 Property로 반환한다. |
+  | `getProperty()` | 시스템 속성 값을 문자열로 반환한다. 없을 경우 null 또는 def를 반환 |
+  | `identityHashCode()` | 객체의 해시코드 값을 반환한다. |
+  | `lineSeparator()` | 시스템의 줄넘김 문자열을 반환한다. UNIX: `\n`, WINDOWS: `\r\n` |
+  | `nanoTime()` | 시스템 시간을 ns로 반환한다. |
+  | `setProperties()` | 시스템 속성을 한번에 설정한다. |
+  | `setProperty()` | 시스템 속성을 하나씩 설정한다. |
 
-  BinaryOperator<Integer> maxBy = BinaryOperator.maxBy((val1, val2) -> {
-      return val1.compareTo(val2);
-  });
-  ```
+  - 주요 Property
 
-### 람다식에 메소드/생성자 사용
+    | 속성 | 설명 |
+    |------|------|
+    | `user.country` | OS 로케일 정보 |
+    | `java.io.tmpdir` | 임시 경로 |
+    | `line.separator` | 줄넘김 문자열 |
+    | `user.home` | 유저 홈 경로 |
+    | `file.separator` | 파일 경로 구분 |
 
-- 이미 구현된 메소드가 있는 경우, 다양한 방식으로 람다식을 대체 가능
+### Math
 
-#### ClassName::instanceMethod
+- 수학 계산에 필요한 메소드를 가진 final 클래스
 
-- 첫번째 파라미터를 객체로, 두번째 파라미터를 메소드 입력으로 사용
-
-  ```java
-  String[] strings = { "A", "B", "D", "C" };
-  Arrays.sort(strings, String::compareTo);
-  ```
-
-#### ClassName::classMethod
-
-- 클래스 메소드의 입력으로 모든 파라미터가 사용됨
-
-  ```java
-  Function<String, Integer> parser = Integer::parseInt;
-  ```
-
-#### instance::instanceMethod
-
-- 주어진 객체의 메소드를 호출
-  
-  ```java
-  String string = "StringA";
-  Predicate<String> pred = string::equals;
-  System.out.println(pred.apply("StringA"));
-  ```
-
-#### ClassName::new
-
-- 생성자를 이용하여 객체를 생성하는 람다식
-
-  ```java
-  IntFunction<String> func = String::new;
-  String string = func.apply(10);
-  ```
-
-#### ClassName[]::new
-
-- 배열을 생성하는 람다식
-
-  ```java
-  IntFunction<String[]> func = String[]::new;
-  String [] strings = func.apply(100);
-  ```
+  | 메소드 | 설명 |
+  |--------|-----|
+  | `abs()` | 절대값을 반환한다. |
+  | `ceil()` | 올림 값을 double로 반환한다. |
+  | `floor()` | 내림 값을 double로 반환한다. |
+  | `max()` | 두 값 중 더 큰 값을 반환한다. |
+  | `min()` | 두 값 중 더 작은 값을 반환한다. |
+  | `random()` | 0 이상 1.0 미만의 임의의 값을 반환한다. |
+  | `round()` | 소수점 첫째자리에서 반올림한 정수 값을 반환한다. |
+  | `addExact()` | 덧셈 연산으로, Overflow 발생 시 `ArithmaticException` 발생. |
+  | `subtractExact()` | 뺄셈 연산으로, Overflow 발생 시 `ArithmaticException` 발생. |
+  | `multiplyExact()` | 곱셈 연산으로, Overflow 발생 시 `ArithmaticException` 발생. |
