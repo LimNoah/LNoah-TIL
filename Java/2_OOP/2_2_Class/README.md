@@ -10,7 +10,7 @@
 ### 클래스의 구성
 
 ```java
-public class Car {
+public class ClassSrc.Car {
     int speed = 0; // 멤버 변수 (속성)
 
     void move() { // 멤버 함수 (메소드)
@@ -25,7 +25,7 @@ public class Car {
 ### 객체의 생성
 
 ```java
-Car car = new Car();
+ClassSrc.Car car = new ClassSrc.Car();
 클래스명 변수명 = new 클래스명();
 ```
 
@@ -89,13 +89,13 @@ Car car = new Car();
 - 객체가 아닌 클래스로 접근하는 것이 권장됨 (객체로 접근도 가능하나 비권장)
 
   ```java
-  public class Foo {
+  public class InheritanceSrc.Foo {
       static int classVar = 10;
   }
 
-  Foo.classVar = 0; // Recommended
+  InheritanceSrc.Foo.classVar = 0; // Recommended
 
-  Foo foo = new Foo();
+  InheritanceSrc.Foo foo = new InheritanceSrc.Foo();
   foo.classVar = 0; // Not recommended
   ```
 
@@ -119,7 +119,7 @@ Car car = new Car();
   }
   ```
 
-## 메소드 (Methods)
+## 메소드 (ClassSrc.Methods)
 
 ### 메소드란
 
@@ -127,7 +127,7 @@ Car car = new Car();
 - 코드의 중복을 방지하고 유지보수성을 향상시키기 위해 사용
 
 ```java
-public class Car {
+public class ClassSrc.Car {
     String name;
 
     void printModel() { // 메소드의 정의 (Method definition)
@@ -135,8 +135,8 @@ public class Car {
     }
 }
 
-Car hyundai = new Car();
-Car kia = new Car();
+ClassSrc.Car hyundai = new Car();
+ClassSrc.Car kia = new Car();
 
 hyundai.name = "Hyundai";
 kia.name = "Kia";
@@ -193,14 +193,14 @@ kia.printModel();
           y = temp;
       }
 
-      public void swapReference(Foo x, Foo y) {
+      public void swapReference(InheritanceSrc.Foo x, InheritanceSrc.Foo y) {
           int temp = x.value;
           x.value = y.value;
           y.value = temp;
       }
   }
 
-  Bar bar = new Bar();
+  InheritanceSrc.Bar bar = new InheritanceSrc.Bar();
 
   int x = 1, y = 10;
   bar.swapPrimitive(x, y);
@@ -220,7 +220,7 @@ kia.printModel();
   - 대표적으로 main 메소드가 클래스 메소드이다.
 
   ```java
-    public class Foo {
+    public class InheritanceSrc.Foo {
       static public void main(String args[]) {
           // class method
       }
@@ -255,7 +255,7 @@ kia.printModel();
       }
   }
 
-  Foo foo = Foo();
+  InheritanceSrc.Foo foo = Foo();
   int sum1 = foo.sumAll(1, 2, 3, 4, 5);
   float sum2 = foo.sumAll(1.0f, 2.0f, 3.0f, 4.0f, 5.0f);
   ```
@@ -274,14 +274,14 @@ kia.printModel();
   - 보통 멤버 변수를 초기화하는 동작 수행
 
 ```java
-public class Foo {
+public class InheritanceSrc.Foo {
     int x;
     int y;
     String z;
 
-    // public Foo() {} // Default Constructor
+    // public InheritanceSrc.Foo() {} // Default Constructor
 
-    public Foo(int a, int b, String c) { // Parameter Constructor
+    public InheritanceSrc.Foo(int a, int b, String c) { // Parameter Constructor
         x = a;
         y = b
         z = c;
@@ -295,11 +295,11 @@ public class Foo {
 - 멤버 변수와 로컬 변수의 이름이 같을 때, 멤버 변수임을 명시
 
   ```java
-  public class Foo {
+  public class InheritanceSrc.Foo {
       int x;
       int y;
 
-      public Foo(int x, int y) {
+      public InheritanceSrc.Foo(int x, int y) {
           this.x = x;
           this.y = y;
       }
@@ -310,22 +310,22 @@ public class Foo {
 - 반드시 생성자의 첫 줄에서만 사용해야 한다.
 
   ```java
-  public class Foo {
+  public class InheritanceSrc.Foo {
       int x;
       int y;
       String z;
 
-      public Foo(int x, int y, String z) {
+      public InheritanceSrc.Foo(int x, int y, String z) {
           this.x = x;
           this.y = y;
           this.z = z;
       }
 
-      public Foo(String z) {
+      public InheritanceSrc.Foo(String z) {
           this(0, 0, z);
       }
 
-      public Foo(int x, int y) {
+      public InheritanceSrc.Foo(int x, int y) {
           this(x, y, "Nothing");
       }
   }
@@ -337,7 +337,7 @@ public class Foo {
 - 멤버 변수의 캡슐화(Encapsulation)를 구현하기 위해 사용
 
   ```java
-  public class Foo {
+  public class InheritanceSrc.Foo {
       private int x;
 
       public int setX(int x) {
@@ -355,7 +355,7 @@ public class Foo {
 - 클래스 또는 인스턴스를 생성할 때 단 한번 실행되는 코드 블록
 
   ```java
-  public class Foo {
+  public class InheritanceSrc.Foo {
       static int classVar;
       int instanceVar;
 

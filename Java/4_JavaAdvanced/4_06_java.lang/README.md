@@ -82,12 +82,12 @@
 
   class FooTest {
       public static void main(String[] args) throws Exception {
-          Foo foo = new Foo();
+          InheritanceSrc.Foo foo = new InheritanceSrc.Foo();
           Class fooClass = foo.getClass();
 
           System.out.println(fooClass.getName());
           System.out.println(fooClass.getDeclaredMethods().length);
-          System.out.println(Foo.class.getDeclaredMethod("methodA").invoke(foo));
+          System.out.println(InheritanceSrc.Foo.class.getDeclaredMethod("methodA").invoke(foo));
       }
   }
   ```

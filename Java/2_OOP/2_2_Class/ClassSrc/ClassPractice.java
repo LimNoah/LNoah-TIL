@@ -1,3 +1,4 @@
+package ClassSrc;
 
 /**
  * 클래스 - 객체를 생성하기 위한 설계도 (Class)

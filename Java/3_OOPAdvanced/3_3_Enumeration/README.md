@@ -59,7 +59,7 @@
 
   public class Main {
       public static void main(String[] args) {
-          System.out.println(Foo.MyEnum.ONE);
+          System.out.println(InheritanceSrc.Foo.MyEnum.ONE);
       }
   }
   ```

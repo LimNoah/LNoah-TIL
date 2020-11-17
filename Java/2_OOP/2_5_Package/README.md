@@ -29,7 +29,7 @@
   ```java
   import java.util.List;
 
-  public class Foo {
+  public class InheritanceSrc.Foo {
       public static void main(String args[]) {
           List list = new List();
           java.awt.List list2 = new java.awt.List();

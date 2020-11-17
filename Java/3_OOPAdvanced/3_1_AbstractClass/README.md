@@ -11,7 +11,7 @@
       }
   }
 
-  public class Bar extends Foo {
+  public class Bar extends InheritanceSrc.Foo {
       public void methodB() {
           return;
       }
@@ -19,9 +19,9 @@
 
   public class Main {
       public static void main(String args[]) {
-          Bar bar = new Bar();
+          InheritanceSrc.Bar bar = new InheritanceSrc.Bar();
 
-          Foo foo = (Foo)bar;
+          InheritanceSrc.Foo foo = (InheritanceSrc.Foo)bar;
       }
   }
   ```
@@ -48,7 +48,7 @@
           Foo foo = new Foo();
           Bar bar;
 
-          // bar = (Bar)foo; // error
+          // bar = (Bar)foo; /Sources.Barrror
           if (foo instanceof Bar) { // returns false
               bar = (Bar)foo;
           }
@@ -68,7 +68,7 @@
       }
   }
 
-  public class Bar extends Foo {
+  public class Bar extends InheritanceSrc.Foo {
       public String x = "Sub";
 
       @Override
@@ -80,8 +80,8 @@
 
   public class Main {
       public static void main(String args[]) {
-          Bar bar = new Bar();
-          Foo foo = (Foo)bar;
+          InheritanceSrc.Bar bar = new InheritanceSrc.Bar();
+          InheritanceSrc.Foo foo = (InheritanceSrc.Foo)bar;
 
           System.out.println(bar.x); // Sub
           bar.methodA(); // Sub
@@ -96,14 +96,13 @@
 
   ```java
   class Foo {
-      public Foo getInstance() {
+      public InheritanceSrc.Foo getInstance() {
           return this;
       }
   }
 
-  class Bar extends Foo {
-      public Bar getInstance() { // Foo 대신 Bar로 리턴 가능
-          return this;
+  class Bar extends InheritanceSrc.Foo {
+      public InheritanceSrc.Bar getInstance() { // Foo 대신 Bar로 리턴InheritanceSrc.Foorces.FooInheritanceSrc.Foo        return this;
       }
   }
   ```

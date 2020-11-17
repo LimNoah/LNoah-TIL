@@ -14,7 +14,7 @@
 - 부모 클래스
 
   ```java
-  public class Person {
+  public class InheritanceSrc.Person {
       String name;
 
       public void work() {
@@ -30,7 +30,7 @@
 - 자식 클래스
 
   ```java
-  public class Developer extends Person {
+  import InheritanceSrc.Person;import Person;public class Developer extends Person {
       String mainLang;
 
       public void writeCode() {
@@ -40,7 +40,7 @@
   ```
 
   ```java
-  public class Student extends Person {
+  import InheritanceSrc.Person;import Person;public class Student extends Person {
       String major;
 
       public void writeCode() {
@@ -56,17 +56,17 @@
 - 클래스 컴포지션 (Composition)이라 부른다.
 
   ```java
-  public class MainMachine {
+  public class InheritanceSrc.MainMachine {
       String model;
 
-      public MainMachine(String model) {
+      public InheritanceSrc.MainMachine(String model) {
           this.model = model;
       }
   }
   ```
 
   ```java
-  public class Developer extends Person {
+  import InheritanceSrc.MainMachine;import InheritanceSrc.Person;import Person;public class Developer extends Person {
       MainMachine machine = new MainMachine("Macbook Air");
 
       public void writeCode() {
@@ -80,7 +80,7 @@
 - 메소드의 기능을 재정의하는 것을 메소드 재정의 (Method overriding)이라 부른다.
 
   ```java
-  public class Person {
+  public class InheritanceSrc.Person {
       public void writeCode() {
           System.out.println("아무 코드나 일단 적어보았다.");
       }
@@ -88,7 +88,7 @@
   ```
 
   ```java
-  public class Developer extends Person {
+  import InheritanceSrc.Person;public class Developer extends Person {
       @Override
       public void writeCode() {
           System.out.println("깔끔하고 예쁜 코드를 적어보았다.");
@@ -106,7 +106,7 @@
       String x = "foo";
   }
 
-  public class Bar extends Foo{
+  public class Bar extends InheritanceSrc.Foo{
       String x = "bar";
 
       void method() {
@@ -130,7 +130,7 @@
       }
   }
 
-  public class Bar extends Foo {
+  public class Bar extends InheritanceSrc.Foo {
       String y;
 
       public Bar(String x, String y) {

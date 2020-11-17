@@ -1,6 +1,7 @@
+package ClassSrc;
 
 /**
- * 메소드 (Methods)
+ * 메소드 (ClassSrc.Methods)
  * 객체가 하는 동작(행위)을 정의하는 작업을 수행하는 코드의 집합, 나열
  * 코드의 중복을 방지, 유지보수성을 향상, 코드의 가독성 개선
  */
@@ -115,8 +116,8 @@ public class Methods {
         System.out.println(Bar.sumAll(2.2f, 0.2f, 0.2f));
 
 //        classMethod(); // 동일 클래스에 속한 클래스 메소드 호출
-//        Methods.classMethod();
-//        Methods m = new Methods();
+//        ClassSrc.Methods.classMethod();
+//        ClassSrc.Methods m = new ClassSrc.Methods();
 //        m.instanceMethod();
     }
 }

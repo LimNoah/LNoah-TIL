@@ -26,7 +26,7 @@
 - `private` 또는 `protected` 변수에 접근하기 위해 getter와 setter 사용
 
   ```java
-  class public Foo {
+  class public InheritanceSrc.Foo {
       private int x = 0;
       private int y = 1;
 
@@ -61,11 +61,11 @@
       - 생성자에서 초기화가 이루어지는 것을 `blank final` 변수라 한다.
 
       ```java
-      public class Foo {
+      public class InheritanceSrc.Foo {
           final int x = 0; // final variable
           final int y; // blank finial variable
 
-          public Foo(int y) {
+          public InheritanceSrc.Foo(int y) {
             this.y = y; // blank final variable initialization
         }
 

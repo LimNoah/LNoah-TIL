@@ -82,7 +82,7 @@
       ...
   }
 
-  class FooBar<C, T, D> extends Foo<T> implements IBar<D> {
+  class FooBar<C, T, D> extends InheritanceSrc.Foo<T> implements IBar<D> {
       ...
   }
   ```
@@ -142,7 +142,7 @@
       ...
   }
 
-  class Bar extends Foo {
+  class Bar extends InheritanceSrc.Foo {
       ...
   }
 
@@ -152,7 +152,7 @@
 
   class WildCard {
       public void method1(Generic<?> x) {}
-      public void method2(Generic<? extends Foo> x) {}
-      public void method3(Generic<? super Bar> x) {}
+      public void method2(Generic<? extends InheritanceSrc.Foo> x) {}
+      public void method3(Generic<? super InheritanceSrc.Bar> x) {}
   }
   ```

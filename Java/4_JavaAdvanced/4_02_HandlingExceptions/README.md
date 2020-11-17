@@ -159,15 +159,15 @@
       void methodA() throws IOException {}
   }
 
-  class BarOne extends Foo{
+  class BarOne extends InheritanceSrc.Foo{
       void methodA() throws IOException {} // possible
   }
 
-  class BarTwo extends Foo{
+  class BarTwo extends InheritanceSrc.Foo{
       void methodA() throws FileNotFoundException {} // possible
   }
 
-  class BarThree extends Foo{
+  class BarThree extends InheritanceSrc.Foo{
       void methodA() throws Exception {} // *NOT* possible
   }
 

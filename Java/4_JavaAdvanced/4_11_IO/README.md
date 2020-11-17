@@ -295,7 +295,7 @@
   class FooTest {
     public static void main (String [] args) {
       File dst = new File("C:/Temp/obj.data");
-      Foo foo = new Foo();
+      InheritanceSrc.Foo foo = new InheritanceSrc.Foo();
       foo.userName = "김사탕";
       foo.id = 142;
       foo.passWord = "qwer1234";
@@ -304,8 +304,8 @@
           ObjectInputStream in = new ObjectInputStream(new FileInputStream(dst));) {
         out.writeObject(foo);
         Object read = in.readobject();
-        if (read != null && read instanceof Foo) {
-          Foo readFoo = (Foo)read;
+        if (read != null && read instanceof InheritanceSrc.Foo) {
+          InheritanceSrc.Foo readFoo = (InheritanceSrc.Foo)read;
           System.out.println(readFoo);
         }
       } catch (IOException | ClassNotFoundException e) {

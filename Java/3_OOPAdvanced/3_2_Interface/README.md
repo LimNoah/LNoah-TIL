@@ -22,7 +22,7 @@
       void methodB(int param); // public abstract
   }
 
-  public class Foo implements IFoo {
+  public class InheritanceSrc.Foo implements IFoo {
       @Override
       void methodA(int param) {
           System.out.println(param);
@@ -128,13 +128,13 @@
       }
   }
 
-  class Foo implements IFoo {
+  class InheritanceSrc.Foo implements IFoo {
   }
 
   public class Main {
       public static void main(String[] args) {
           IFoo.staticMethod(); // static method
-          // Foo.staticMethod(); // not possible
+          // InheritanceSrc.Foo.staticMethod(); // not possible
       }
   }
   ```

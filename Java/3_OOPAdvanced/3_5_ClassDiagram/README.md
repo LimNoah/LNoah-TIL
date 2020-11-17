@@ -27,9 +27,9 @@
         void method();
     }
 
-    abstract class Bar
+    abstract class InheritanceSrc.Bar
 
-    class Foo {
+    class InheritanceSrc.Foo {
         int [] array;
         int add(int x, int y);
         setArray(int [] array);
@@ -57,7 +57,7 @@
   - 노트
 
     ```puml
-    note left of Foo
+    note left of InheritanceSrc.Foo
       노트 <b>내용</b> 작성
     end note
     ```
